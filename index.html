@@ -188,70 +188,46 @@
 
       document.addEventListener("DOMContentLoaded", function () {
         const menuContainer = document.getElementById("subject-menu");
-
         // --- 1. Function to Generate the Menu ---
         function generateMenu() {
-          // Loop through each chapter in the data object
           chaptersData.forEach((chapter) => {
-            // Create the main container for the dropdown
             const dropdownDiv = document.createElement("div");
             dropdownDiv.className = "dropdown";
-
-            // Create the button for the chapter
             const button = document.createElement("button");
             button.className = "dropdown-btn";
             button.textContent = chapter.title;
-
-            // Create the container for the topics
             const contentDiv = document.createElement("div");
             contentDiv.className = "dropdown-content";
-
-            // Loop through the topics for the current chapter
             chapter.topics.forEach((topic) => {
               const link = document.createElement("a");
               link.textContent = topic.title;
               link.href = topic.url;
               contentDiv.appendChild(link);
             });
-
-            // Assemble the parts
             dropdownDiv.appendChild(button);
             dropdownDiv.appendChild(contentDiv);
-
-            // Add the completed dropdown to the main container
             menuContainer.appendChild(dropdownDiv);
           });
         }
-
         // --- 2. Function to Add Event Listeners ---
         function attachEventListeners() {
-          const allDropdownBtns = menuContainer.querySelectorAll(".dropdown-btn");
-
+          const allDropdownBtns =
+            menuContainer.querySelectorAll(".dropdown-btn");
           allDropdownBtns.forEach((btn) => {
             btn.addEventListener("click", function (event) {
               const currentContent = this.nextElementSibling;
-              const isAlreadyOpen = this.classList.contains("active");
-
-              // First, close all other dropdowns
               allDropdownBtns.forEach((otherBtn) => {
                 if (otherBtn !== this) {
-                  // Don't close the one we are interacting with yet
                   otherBtn.classList.remove("active");
                   otherBtn.nextElementSibling.classList.remove("show");
                 }
               });
-
-              // Toggle the clicked dropdown
               this.classList.toggle("active");
               currentContent.classList.toggle("show");
-
               event.stopPropagation();
             });
           });
-
-          // Optional: Close dropdowns if clicking outside
           window.addEventListener("click", function (event) {
-            // Check if the click was outside of any dropdown button
             if (!event.target.matches(".dropdown-btn")) {
               allDropdownBtns.forEach((btn) => {
                 btn.classList.remove("active");
@@ -260,10 +236,20 @@
             }
           });
         }
-
         // --- 3. Initialize the Menu ---
         generateMenu();
         attachEventListeners();
+        // Add the registration elements
+        const registrationText = document.createElement("p");
+        registrationText.className = "registration-text";
+        registrationText.textContent = "বিগত বছরগুলোর মেডিকেল এডমিশন টেস্টে কেমিস্ট্রির প্রায় ১০০% প্রশ্ন বিগত বছরের প্রশ্ন ও অনুশীলনী থেকে হুবুহু কমন এসেছে। সকল অধ্যায়ের এই ধরণের প্রশ্ন অনুশীলন করতে রেজিষ্ট্রেশন করো আজই!";
+        menuContainer.appendChild(registrationText);
+
+        const registrationButton = document.createElement("a");
+        registrationButton.className = "registration-button";
+        registrationButton.textContent = "রেজিষ্ট্রেশন করো";
+        registrationButton.href = "#";
+        menuContainer.appendChild(registrationButton);
       });
     </script>
   </body>
